@@ -1,6 +1,7 @@
 using EmployeeAPI.Data;
 using EmployeeAPI.Repository;
 using EmployeeAPI.Service;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,8 +31,8 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 //Core
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost3000",
-        builder => builder.WithOrigins("http://localhost:5173/")
+    options.AddPolicy("AllowLocalhost5173",
+        builder => builder.WithOrigins("http://localhost:5173")
         .AllowAnyHeader()
         .AllowAnyMethod());
 });
@@ -47,6 +48,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowLocalhost5173");
 
 app.UseAuthorization();
 

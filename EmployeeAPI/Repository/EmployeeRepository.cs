@@ -13,11 +13,10 @@ namespace EmployeeAPI.Repository
         }
 
         //Get All Employee
-        public async Task<List<object>> GetEmployees()
+        public async Task<List<dynamic>> GetEmployees()
         {
             var data = await (from emp in _context.Employees
                               join dept in _context.Departments on emp.DepartmentID equals dept.DepartmentID
-                              join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID into projects
                               select new
                               {
                                   emp.FirstName,
@@ -25,11 +24,22 @@ namespace EmployeeAPI.Repository
                                   emp.Email,
                                   emp.Gender,
                                   dept.DepartmentName,
-                                  emp.JobTitle,
-                                  Projects = projects.Select(p => p.ProjectName).ToList()
-                              }).ToListAsync<object>();
+                                  emp.JobTitle
+                              }).ToListAsync<dynamic>();
+
+            foreach (var item in data)
+            {
+                if (string.IsNullOrEmpty(item.Email))
+                    item.Email = null;
+                if (string.IsNullOrEmpty(item.Gender))
+                    item.Gender = null;
+                if (string.IsNullOrEmpty(item.JobTitle))
+                    item.JobTitle = null;
+            }
+
             return data;
         }
+
 
         //Update
         public async Task<Employee> UpdateEmployee(Employee updatedEmp)

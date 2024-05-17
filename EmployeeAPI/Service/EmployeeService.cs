@@ -11,7 +11,7 @@ namespace EmployeeAPI.Service
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<List<object>> GetEmployees()
+        public async Task<List<dynamic>> GetEmployees()
         {
             var result = await _employeeRepository.GetEmployees();
             return result;
