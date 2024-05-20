@@ -17,6 +17,12 @@ namespace EmployeeAPI.Service
             return result;
         }
 
+        public async Task<List<object>> GetEmpDept(int id)
+        {
+            var result = await _departRepository.GetEmpDept(id);
+            return result;
+        }
+
         public async Task<Department> UpdateDepartment(Department updatedDept)
         {
             var result = await _departRepository.UpdateDepartment(updatedDept);

@@ -16,10 +16,17 @@ namespace EmployeeAPI.Controllers
             _departmentService = departmentService;
         }
 
-        [HttpGet("GetAllDepartment")]
+        [HttpGet("GetDepartments")]
         public async Task<ActionResult<List<object>>> GetDepartments()
         {
             var result = await _departmentService.GetDepartments();
+            return Ok(result);
+        }
+
+        [HttpGet("GetEmployeeByDepartment/{id}")]
+        public async Task<ActionResult<List<object>>> GetEmpDept(int id)
+        {
+            var result = await _departmentService.GetEmpDept(id);
             return Ok(result);
         }
 

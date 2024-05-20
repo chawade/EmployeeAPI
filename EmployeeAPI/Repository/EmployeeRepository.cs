@@ -27,9 +27,6 @@ namespace EmployeeAPI.Repository
                                   dept.DepartmentName,
                                   emp.JobTitle,
                                   //proj.ProjectName,
-
-
-
                               }).ToListAsync<object>();
 
             //foreach (var item in data)

@@ -15,7 +15,7 @@ namespace EmployeeAPI.Controllers
             _projectService = projectService;
         }
 
-        [HttpGet("GetAllProjects")]
+        [HttpGet("GetProjects")]
         public async Task<ActionResult<List<object>>> GetProjects()
         {
             var project = await _projectService.GetProjects();

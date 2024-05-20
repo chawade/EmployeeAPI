@@ -26,6 +26,10 @@ builder.Services.Configure<ApiBehaviorOptions>(opt =>
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 
 builder.Services.AddCors(options =>
