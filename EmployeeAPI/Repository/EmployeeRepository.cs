@@ -17,7 +17,7 @@ namespace EmployeeAPI.Repository
         {
             var data = await (from emp in _context.Employees
                               join dept in _context.Departments on emp.DepartmentID equals dept.DepartmentID
-                              join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID
+                              //join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID
                               select new
                               {
                                   emp.FirstName,
@@ -25,7 +25,8 @@ namespace EmployeeAPI.Repository
                                   emp.Email,
                                   emp.Gender,
                                   dept.DepartmentName,
-                                  proj.ProjectName,
+                                  emp.JobTitle,
+                                  //proj.ProjectName,
 
 
 
@@ -86,7 +87,7 @@ namespace EmployeeAPI.Repository
         {
             var data = await (from emp in _context.Employees
                               join dept in _context.Departments on emp.DepartmentID equals dept.DepartmentID
-                              join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID into projects
+                              //join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID into projects
                               where string.IsNullOrEmpty(text)
                                     || emp.FirstName.Contains(text)
                                     || emp.LastName.Contains(text)
@@ -99,7 +100,7 @@ namespace EmployeeAPI.Repository
                                   emp.Gender,
                                   dept.DepartmentName,
                                   emp.JobTitle,
-                                  Projects = projects.Select(p => p.ProjectName).ToList()
+                                  //Projects = projects.Select(p => p.ProjectName).ToList()
                               }).ToListAsync<object>();
             return data;
         }
