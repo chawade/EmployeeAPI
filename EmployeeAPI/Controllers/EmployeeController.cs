@@ -17,7 +17,7 @@ namespace EmployeeAPI.Controllers
 
         //GetAllEmployee
         [HttpGet("GetEmployees")]
-        public async Task<ActionResult<List<dynamic>>> GetEmployees()
+        public async Task<ActionResult<List<object>>> GetEmployees()
         {
             var result = await _employeeService.GetEmployees();
             return Ok(result);
