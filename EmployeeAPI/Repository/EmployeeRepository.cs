@@ -24,8 +24,8 @@ namespace EmployeeAPI.Repository
                                   emp.LastName,
                                   emp.Email,
                                   emp.Gender,
-                                  dept.DepartmentName,
                                   emp.JobTitle,
+                                  dept.DepartmentName,
                                   //proj.ProjectName,
                               }).ToListAsync<object>();
 

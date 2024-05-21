@@ -15,7 +15,6 @@ namespace EmployeeAPI.Controllers
             _employeeService = employeeService;
         }
 
-        //GetAllEmployee
         [HttpGet("GetEmployees")]
         public async Task<ActionResult<List<object>>> GetEmployees()
         {
@@ -74,4 +73,3 @@ namespace EmployeeAPI.Controllers
     }
 
 }
-

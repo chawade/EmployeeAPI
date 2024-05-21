@@ -24,28 +24,6 @@ namespace EmployeeAPI.Repository
             return data;
         }
 
-        //Get All Departmant + Employee
-        public async Task<List<object>> GetEmpDept(int id)
-        {
-            var dbDept = await _context.Departments.FindAsync(id);
-            if (dbDept is null)
-                return null;
-
-            var data = await (from dept in _context.Departments
-                              join emp in _context.Employees on dept.DepartmentID equals emp.DepartmentID
-                              where dept.DepartmentID == id
-                              select new
-                              {
-                                  emp.FirstName,
-                                  emp.LastName,
-                                  emp.Email,
-                                  emp.Gender,
-                                  dept.DepartmentName,
-                                  emp.JobTitle,
-                              }).ToListAsync<object>();
-            return data;
-        }
-
         //Update
         public async Task<Department> UpdateDepartment(Department updatedDept)
         {

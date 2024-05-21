@@ -23,13 +23,6 @@ namespace EmployeeAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetEmployeeByDepartment/{id}")]
-        public async Task<ActionResult<List<object>>> GetEmpDept(int id)
-        {
-            var result = await _departmentService.GetEmpDept(id);
-            return Ok(result);
-        }
-
         [HttpPut("Update Dept")]
         public async Task<ActionResult<Department>> UpdateDepartment(Department updatedDept)
         {
