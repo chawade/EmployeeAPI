@@ -4,7 +4,7 @@ namespace EmployeeAPI.Service
 {
     public interface IDepartmentService
     {
-        Task<List<object>> GetDepartments();
+        Task<List<Department>> GetDepartments();
         Task<Department> UpdateDepartment(Department updatedDept);
         Task AddDepartment(Department addDept);
         List<Department> RemoveDepartment(int id);

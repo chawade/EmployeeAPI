@@ -13,14 +13,9 @@ namespace EmployeeAPI.Repository
         }
 
         //Get All Departmant
-        public async Task<List<object>> GetDepartments()
+        public async Task<List<Department>> GetDepartments()
         {
-            var data = await (from dept in _context.Departments
-                              select new
-                              {
-                                  dept.DepartmentName,
-                                  dept.ManagerID
-                              }).ToListAsync<object>();
+            var data = await _context.Departments.ToListAsync();
             return data;
         }
 

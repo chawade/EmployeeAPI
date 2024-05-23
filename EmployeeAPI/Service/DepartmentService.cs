@@ -11,7 +11,7 @@ namespace EmployeeAPI.Service
             _departRepository = departRepository;
         }
 
-        public async Task<List<object>> GetDepartments()
+        public async Task<List<Department>> GetDepartments()
         {
             var result = await _departRepository.GetDepartments();
             return result;

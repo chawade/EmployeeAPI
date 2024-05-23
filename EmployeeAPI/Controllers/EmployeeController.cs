@@ -36,19 +36,36 @@ namespace EmployeeAPI.Controllers
         [HttpPut("UpdateEmployee")]
         public async Task<ActionResult> UpdateEmployee(Employee updatedEmp)
         {
+            if (updatedEmp == null)
+            {
+                return BadRequest("Invalid employee data.");
+            }
+
             if (string.IsNullOrEmpty(updatedEmp.FirstName))
             {
-                return BadRequest("Please Enter Firstname.");
+                return BadRequest("Please enter a valid Firstname.");
             }
 
             if (updatedEmp.DepartmentID == 0)
             {
-                return BadRequest("Please Enter DepartmentID (1.IT 2.HR 3.Marketing)");
+                return BadRequest("Please enter a valid DepartmentID (1.IT, 2.HR, 3.Marketing).");
             }
 
-            await _employeeService.UpdateEmployee(updatedEmp);
-            return Ok("Successfully!!");
+            try
+            {
+                await _employeeService.UpdateEmployee(updatedEmp);
+                return Ok("Employee updated successfully!!");
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the employee.");
+            }
         }
+
 
         [HttpPost("AddEmployee")]
         public async Task<ActionResult<List<object>>> AddEmployee(Employee addEmp)

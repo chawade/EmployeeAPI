@@ -21,6 +21,7 @@ namespace EmployeeAPI.Repository
                               //join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID
                               select new
                               {
+                                  emp.EmployeeID,
                                   emp.FirstName,
                                   emp.LastName,
                                   emp.Email,
@@ -40,7 +41,7 @@ namespace EmployeeAPI.Repository
             if (dbEmp == null) return null;
             var data = await (from emp in _context.Employees
                               join dept in _context.Departments on emp.DepartmentID equals dept.DepartmentID
-            //join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID
+                              join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID into projects
                               where emp.EmployeeID == id
                               select new
                               {
@@ -50,7 +51,7 @@ namespace EmployeeAPI.Repository
                                   emp.Gender,
                                   emp.JobTitle,
                                   dept.DepartmentName,
-                                  //proj.ProjectName,
+                                  Projects = projects.Select(p => p.ProjectName).ToList()
                               }).ToListAsync<object>();
 
             return data;
@@ -61,6 +62,13 @@ namespace EmployeeAPI.Repository
         {
             var dbEmp = await _context.Employees.FindAsync(updatedEmp.EmployeeID);
 
+            if (dbEmp == null)
+            {
+                // หากไม่พบข้อมูลพนักงานที่ต้องการอัปเดต
+                throw new ArgumentException("Employee not found.", nameof(updatedEmp.EmployeeID));
+            }
+
+            // อัปเดตข้อมูลพนักงาน
             dbEmp.FirstName = updatedEmp.FirstName;
             dbEmp.LastName = updatedEmp.LastName;
             dbEmp.Email = updatedEmp.Email;
@@ -68,11 +76,13 @@ namespace EmployeeAPI.Repository
             dbEmp.DepartmentID = updatedEmp.DepartmentID;
             dbEmp.JobTitle = updatedEmp.JobTitle;
 
-            _context.Entry(dbEmp).State = EntityState.Modified;
+            // บันทึกการเปลี่ยนแปลงลงในฐานข้อมูล
             await _context.SaveChangesAsync();
 
+            // ส่งค่าพนักงานที่ถูกอัปเดตกลับ
             return dbEmp;
         }
+
 
         //New
         public async Task AddEmployee(Employee addEmp)
