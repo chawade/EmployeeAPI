@@ -1,6 +1,7 @@
 ﻿using EmployeeAPI.Data;
 using EmployeeAPI.Entities;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EmployeeAPI.Repository
 {
@@ -29,19 +30,31 @@ namespace EmployeeAPI.Repository
                                   //proj.ProjectName,
                               }).ToListAsync<object>();
 
-            //foreach (var item in data)
-            //{
-            //    if (string.IsNullOrEmpty(item.Email))
-            //        item.Email = null;
-            //    if (string.IsNullOrEmpty(item.Gender))
-            //        item.Gender = null;
-            //    if (string.IsNullOrEmpty(item.JobTitle))
-            //        item.JobTitle = null;
-            //}
-
             return data;
         }
 
+        //get by id
+        public async Task<List<object>> GetEmployeeById(int id)
+        {
+            var dbEmp = await _context.Employees.FindAsync(id);
+            if (dbEmp == null) return null;
+            var data = await (from emp in _context.Employees
+                              join dept in _context.Departments on emp.DepartmentID equals dept.DepartmentID
+            //join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID
+                              where emp.EmployeeID == id
+                              select new
+                              {
+                                  emp.FirstName,
+                                  emp.LastName,
+                                  emp.Email,
+                                  emp.Gender,
+                                  emp.JobTitle,
+                                  dept.DepartmentName,
+                                  //proj.ProjectName,
+                              }).ToListAsync<object>();
+
+            return data;
+        }
 
         //Update
         public async Task<Employee> UpdateEmployee(Employee updatedEmp)
@@ -69,15 +82,15 @@ namespace EmployeeAPI.Repository
         }
 
         //Delete
-        public List<Employee> RemoveEmployee(int id)
+        public async Task<Employee> RemoveEmployee(int id)
         {
-            var dbEmp = _context.Employees.Find(id);
+            var dbEmp = await _context.Employees.FindAsync(id);
             if (dbEmp == null) return null;
             _context.Employees.Remove(dbEmp);
-            _context.Entry(dbEmp).State = EntityState.Deleted;
-            _context.SaveChangesAsync();
-            return _context.Employees.ToList();
+            await _context.SaveChangesAsync();
+            return dbEmp;
         }
+
 
         //Search
         public async Task<List<object>> SearchEmployees(string? text)

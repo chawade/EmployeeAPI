@@ -17,6 +17,12 @@ namespace EmployeeAPI.Service
             return result;
         }
 
+        public async Task<List<object>> GetEmployeeById(int id)
+        {
+            var result = await _employeeRepository.GetEmployeeById(id);
+            return result;
+        }
+
         public async Task<Employee> UpdateEmployee(Employee updatedEmp)
         {
             var result = await _employeeRepository.UpdateEmployee(updatedEmp);
@@ -28,9 +34,9 @@ namespace EmployeeAPI.Service
             await _employeeRepository.AddEmployee(addEmp);
         }
 
-        public List<Employee> RemoveEmployee(int id)
+        public async Task<Employee> RemoveEmployee(int id)
         {
-            var result = _employeeRepository.RemoveEmployee(id);
+            var result = await _employeeRepository.RemoveEmployee(id);
             return result;
         }
 

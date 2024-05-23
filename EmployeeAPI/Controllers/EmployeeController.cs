@@ -22,6 +22,17 @@ namespace EmployeeAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetEmployee/{id}")]
+        public async Task<ActionResult<List<object>>>  GetEmployeeById(int id)
+        {
+            var result = await _employeeService.GetEmployeeById(id);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
         [HttpPut("UpdateEmployee")]
         public async Task<ActionResult> UpdateEmployee(Employee updatedEmp)
         {
@@ -57,11 +68,16 @@ namespace EmployeeAPI.Controllers
         }
 
         [HttpDelete("DeleteEmployee")]
-        public ActionResult<List<Employee>> RemoveEmployee(int id)
+        public async Task<ActionResult<List<Employee>>> RemoveEmployee(int id)
         {
-
-            var result = _employeeService.RemoveEmployee(id);
+            try
+            {
+            var result = await _employeeService.RemoveEmployee(id);
             return result is null ? NotFound("Employee Not Found.") : Ok("Successfully!!");
+            } catch (Exception ex)
+            {
+                return Ok("Don't find this id");
+            }
         }
 
         [HttpGet("SearchEmployee")]
