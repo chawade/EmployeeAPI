@@ -37,8 +37,8 @@ namespace EmployeeAPI.Repository
         //get by id
         public async Task<List<object>> GetEmployeeById(int id)
         {
-            var dbEmp = await _context.Employees.FindAsync(id);
-            if (dbEmp == null) return null;
+            var dbDept = await _context.Employees.FindAsync(id);
+            if (dbDept == null) return null;
             var data = await (from emp in _context.Employees
                               join dept in _context.Departments on emp.DepartmentID equals dept.DepartmentID
                               join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID into projects
@@ -50,6 +50,7 @@ namespace EmployeeAPI.Repository
                                   emp.Email,
                                   emp.Gender,
                                   emp.JobTitle,
+                                  emp.DepartmentID,
                                   dept.DepartmentName,
                                   Projects = projects.Select(p => p.ProjectName).ToList()
                               }).ToListAsync<object>();
@@ -94,11 +95,12 @@ namespace EmployeeAPI.Repository
         //Delete
         public async Task<Employee> RemoveEmployee(int id)
         {
-            var dbEmp = await _context.Employees.FindAsync(id);
-            if (dbEmp == null) return null;
-            _context.Employees.Remove(dbEmp);
+            var dbProj = await _context.Employees.FindAsync(id);
+            if (dbProj == null) return null;
+            _context.Employees.Remove(dbProj);
+            _context.Entry(dbProj).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
-            return dbEmp;
+            return dbProj;
         }
 
 

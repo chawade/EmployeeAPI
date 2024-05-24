@@ -17,6 +17,11 @@ namespace EmployeeAPI.Service
             return result;
         }
 
+        public async Task<List<object>> GetDepartmentById(int id)
+        {
+            var result = await _departRepository.GetDepartmentById(id);
+            return result;
+        }
 
         public async Task<Department> UpdateDepartment(Department updatedDept)
         {
@@ -29,9 +34,9 @@ namespace EmployeeAPI.Service
             await _departRepository.AddDepartment(addDept);
         }
 
-        public List<Department> RemoveDepartment(int id)
+        public async Task<Department> RemoveDepartment(int id)
         {
-            var result = _departRepository.RemoveDepartment(id);
+            var result = await _departRepository.RemoveDepartment(id);
             return result;
         }
 

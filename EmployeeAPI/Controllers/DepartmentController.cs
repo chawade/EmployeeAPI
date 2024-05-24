@@ -23,6 +23,13 @@ namespace EmployeeAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetDepartment/{id}")]
+        public async Task<ActionResult<List<object>>> GetDepartmentById(int id)
+        {
+            var result = await _departmentService.GetDepartmentById(id);
+            return Ok(result);
+        }
+
         [HttpPut("Update Dept")]
         public async Task<ActionResult<Department>> UpdateDepartment(Department updatedDept)
         {
@@ -47,9 +54,9 @@ namespace EmployeeAPI.Controllers
             return Ok("Successfully!!");
         }
         [HttpDelete("Delete Dept")]
-        public ActionResult<List<Department>> RemoveDepartment(int id)
+        public async Task<ActionResult<Department>> RemoveDepartment(int id)
         {
-            var result = _departmentService.RemoveDepartment(id);
+            var result = await _departmentService.RemoveDepartment(id);
             return result is null ? NotFound("Employee Not Found.") : Ok("Successfully!!");
         }
 

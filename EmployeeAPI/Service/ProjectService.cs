@@ -17,6 +17,12 @@ namespace EmployeeAPI.Service
             return result;
         }
 
+        public async Task<List<object>> GetProjectById(int id)
+        {
+            var result = await _projectRepository.GetProjectById(id);
+            return result;
+        }
+
         public async Task<Project> UpdateProject(Project updatedProj)
         {
             var result = await _projectRepository.UpdateProject(updatedProj);
@@ -28,9 +34,9 @@ namespace EmployeeAPI.Service
             await _projectRepository.AddProject(addProj);
         }
 
-        public List<Project> RemoveProject(int id)
+        public async Task<Project> RemoveProject(int id)
         {
-            var result = _projectRepository.RemoveProject(id);
+            var result = await _projectRepository.RemoveProject(id);
             return result;
         }
 

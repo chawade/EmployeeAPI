@@ -22,6 +22,13 @@ namespace EmployeeAPI.Controllers
             return Ok(project);
         }
 
+        [HttpGet("GetProject/{id}")]
+        public async Task<ActionResult<List<object>>> GetProjectById(int id)
+        {
+            var result = await _projectService.GetProjectById(id);
+            return Ok(result);
+        }
+
         [HttpPut("UpdateProjects")]
         public async Task<ActionResult<Project>> UpdateProject(Project updatedProj)
         {
@@ -55,10 +62,16 @@ namespace EmployeeAPI.Controllers
         }
 
         [HttpDelete("DeleteProject")]
-        public ActionResult<List<Project>> DeleteProject(int id)
+        public async Task<ActionResult<List<Project>>> DeleteProject(int id)
         {
-            var result = _projectService.RemoveProject(id);
+            try
+            {
+            var result = await _projectService.RemoveProject(id);
             return result is null ? NotFound("Project Not Found.") : Ok("Successfully!!");
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("SearchProjects")]

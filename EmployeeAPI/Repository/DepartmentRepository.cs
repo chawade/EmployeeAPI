@@ -19,8 +19,28 @@ namespace EmployeeAPI.Repository
             return data;
         }
 
-        //Update
-        public async Task<Department> UpdateDepartment(Department updatedDept)
+
+        //get by id
+        public async Task<List<object>> GetDepartmentById(int id)
+        {
+            var dbEmp = await _context.Departments.FindAsync(id);
+            if (dbEmp == null) return null;
+
+            var data = await (from dept in _context.Departments
+                   join proj in _context.Projects on dept.DepartmentID equals proj.DepartmentID into projects
+                   where dept.DepartmentID == id
+                   select new
+                   {
+                       dept.DepartmentName,
+                       dept.ManagerID,
+                       Projects = projects.Select(p => p.ProjectName).ToList()
+                   }).ToListAsync<object>();
+
+            return data;
+        }
+
+            //Update
+            public async Task<Department> UpdateDepartment(Department updatedDept)
         {
             var dbDept = await _context.Departments.FindAsync(updatedDept.DepartmentID);
 
@@ -41,14 +61,14 @@ namespace EmployeeAPI.Repository
         }
 
         //Delete
-        public List<Department> RemoveDepartment(int id)
+        public async Task<Department> RemoveDepartment(int id)
         {
-            var dbEmp = _context.Departments.Find(id);
-            if (dbEmp == null) return null;
-            _context.Departments.Remove(dbEmp);
-            _context.Entry(dbEmp).State = EntityState.Deleted;
-            _context.SaveChangesAsync();
-            return _context.Departments.ToList();
+            var dbdept = await _context.Departments.FindAsync(id);
+            if (dbdept == null) return null;
+            _context.Departments.Remove(dbdept);
+            _context.Entry(dbdept).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+            return dbdept;
         }
 
         //Search
