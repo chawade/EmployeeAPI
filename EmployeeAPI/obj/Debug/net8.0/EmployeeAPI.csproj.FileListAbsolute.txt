@@ -135,3 +135,4 @@ D:\Training\EmployeeAPI\EmployeeAPI\obj\Debug\net8.0\EmployeeAPI.pdb
 D:\Training\EmployeeAPI\EmployeeAPI\obj\Debug\net8.0\EmployeeAPI.genruntimeconfig.cache
 D:\Training\EmployeeAPI\EmployeeAPI\obj\Debug\net8.0\ref\EmployeeAPI.dll
 D:\Training\EmployeeAPI\EmployeeAPI\obj\Debug\net8.0\EmployeeAPI.sourcelink.json
+D:\Training\EmployeeAPI\EmployeeAPI\bin\Debug\net8.0\System.ClientModel.dll

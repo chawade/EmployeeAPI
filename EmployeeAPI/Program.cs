@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext"));
 });
 
 builder.Services.Configure<ApiBehaviorOptions>(opt =>
@@ -50,7 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+string connectionString = app.Configuration.GetConnectionString("DataContext")!;
 
 app.UseHttpsRedirection();
 
