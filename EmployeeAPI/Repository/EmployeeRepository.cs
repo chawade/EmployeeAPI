@@ -99,7 +99,7 @@ namespace EmployeeAPI.Repository
             if (dbProj == null) return null;
             _context.Employees.Remove(dbProj);
             _context.Entry(dbProj).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); 
             return dbProj;
         }
 

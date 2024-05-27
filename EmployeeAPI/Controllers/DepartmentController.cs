@@ -17,7 +17,7 @@ namespace EmployeeAPI.Controllers
         }
 
         [HttpGet("GetDepartments")]
-        public async Task<ActionResult<List<Department>>> GetDepartments()
+        public async Task<ActionResult<List<object>>> GetDepartments()
         {
             var result = await _departmentService.GetDepartments();
             return Ok(result);

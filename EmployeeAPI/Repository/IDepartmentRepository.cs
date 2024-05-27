@@ -4,7 +4,7 @@ namespace EmployeeAPI.Repository
 {
     public interface IDepartmentRepository
     {
-        Task<List<Department>> GetDepartments();
+        Task<List<object>> GetDepartments();
         Task<List<object>> GetDepartmentById(int id);
         Task<Department> UpdateDepartment(Department updatedDept);
         Task AddDepartment(Department addDept);
